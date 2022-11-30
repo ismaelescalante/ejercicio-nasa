@@ -11,9 +11,6 @@ router.get('/', async (req, res) => {
         const result = await Landing.find({year:{$gt: req.query.from, $lt: req.query.to}}).select('name mass year')
         res.send(result)
     }
-        
-    
-   
 })
 
 router.get('/mass/:mass', async (req, res) => {
@@ -28,10 +25,6 @@ router.get('/class/:class', async (req, res) => {
 const result = await Landing.find({recclass: req.params.class}).select('name recclass')
 
 res.send(result).status(200)
-})
-
-router.get('/dates', async (req, res) => {
-
 })
 
 router.post('/create', async (req, res) => {

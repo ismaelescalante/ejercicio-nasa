@@ -3,13 +3,14 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', async (req,res) => {
-
-    const result = await Nea.find({$toLower: {orbit_class: req.query.class}}).select('designation period_yr')
-    res.send(result)
+    if(req.query.class){
+        const result = await Nea.find({$toLower: {orbit_class: req.query.class}}).select('designation period_yr')
+        res.send(result)
+    } else if (req.query.from && req.query.to){
+        const result = await Nea.find({year:{$gt: req.query.from, $lt: req.query.to}}).select('designation discovery_date period_yr')
+        res.send(result)
+    }
     
-})
-
-router.get('/', async (req,res) => {
     
 })
 

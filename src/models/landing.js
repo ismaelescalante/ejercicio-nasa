@@ -7,7 +7,7 @@ const landingSchema = new mongoose.Schema({
     recclass: String,
     mass: String,
     fall: String,
-    year: Date,
+    year: String,
     reclat: String,
     reclong: String,
     geolocation: {latitude: String, longitude: String}

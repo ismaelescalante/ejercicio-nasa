@@ -1,4 +1,4 @@
-const Nea = require('../models/nea')
+const {Nea, validate} = require('../models/nea')
 const express = require('express')
 const router = express.Router()
 
@@ -15,12 +15,18 @@ router.get('/', async (req,res) => {
 })
 
 router.post('/create', async (req,res) => {
+    const {error} = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+    
     const nea = new Nea(req.body)
     await nea.save()
     res.send('Creado con éxito')
 })
 
 router.put('/edit/:designation', async (req, res) => {
+    const {error} = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+   
     const result = await Nea.findOneAndUpdate({designation: req.params.designation}, req.body)
     res.send('Actualizado')
 })

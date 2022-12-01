@@ -1,5 +1,10 @@
+const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 const mongoose = require('mongoose')
-const {neaSchema} = require('./nea')
+
+
+
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -26,9 +31,21 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('users', userSchema)
 
+function validateUser(user){
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        nickname: Joi.string(),
+        email: Joi.string(),
+        picture: Joi.string(),
+        affiliatedNumber: Joi.number().required(),
+        affiliationDate: Joi.string(),
+        occupation: Joi.string(),
+        birthdate: Joi.string(),
+        neas_discovered: Joi.string()
+    })
 
-   
-
-
+    return schema.validate(user)
+}
 
 module.exports = User
+module.exports.validate = validateUser 

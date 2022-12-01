@@ -1,4 +1,6 @@
 const User = require('../models/user')
+const {validate} = require('../models/user')
+const Nea = require('../models/nea')
 const express = require('express')
 const router = express.Router()
 
@@ -14,11 +16,18 @@ router.get('/', async (req,res) => {
 })
 
 router.post('/create', async (req, res) => {
+    const {error} = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+    
     const user = new User(req.body)
+    res.send('Creado nuevo usuario')
     await user.save()
 })
 
 router.put('/edit/:email', async (req, res) => {
+    const {error} = validate(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+
     const user = await User.findOneAndUpdate({email: req.params.email}, req.body)
     res.send('Usuario actualizado')
 })

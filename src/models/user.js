@@ -41,11 +41,11 @@ function validateUser(user){
         affiliationDate: Joi.string(),
         occupation: Joi.string(),
         birthdate: Joi.string(),
-        neas_discovered: Joi.string()
+        neas_discovered: Joi.array()
     })
 
     return schema.validate(user)
 }
 
 module.exports = User
-module.exports.validate = validateUser 
+module.exports.validate = validateUser  

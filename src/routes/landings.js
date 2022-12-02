@@ -1,4 +1,5 @@
-const {Landing, validate} = require('../models/landing')
+const Landing = require('../models/landing')
+const {validate} = require('../models/landing')
 const express = require('express')
 const { valid } = require('joi')
 const router = express.Router()
@@ -10,6 +11,13 @@ router.get('/', async (req, res) => {
         res.send(result).status(200)
     } else if (req.query.from && req.query.to){
         const result = await Landing.find({year:{$gt: req.query.from, $lt: req.query.to}}).select('name mass year')
+        res.send(result)
+    } else if (req.query.from){
+        const result = await Landing.find({year:{$gt: req.query.from}}).select('name mass year')
+        res.send(result)
+    }
+    else if (req.query.to){
+        const result = await Landing.find({year:{$lt: req.query.to}}).select('name mass year')
         res.send(result)
     }
 })
@@ -34,7 +42,7 @@ router.post('/create', async (req, res) => {
     
     const landing = new Landing(req.body)
     await landing.save()
-    console.log('guardado')
+    res.send('Usuario guardado')
 })
 
 router.put('/edit/:id', async (req, res) => {

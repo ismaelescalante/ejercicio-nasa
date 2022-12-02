@@ -1,14 +1,13 @@
 const User = require('../models/user')
 const {validate} = require('../models/user')
-const Nea = require('../models/nea')
 const express = require('express')
 const router = express.Router()
 
 router.get('/', async (req,res) => {
-    if(req.query){
+    if(req.query.email){
         const result = await User.find({email: req.query.email})
         res.send(result)
-    } else {
+     } else {
         const result = await User.find({})
         res.send(result)
     }

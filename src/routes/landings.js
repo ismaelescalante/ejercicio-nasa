@@ -22,6 +22,11 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/all', async (req, res) => {
+    const result = await Landing.find({})
+    res.send(result)
+})
+
 router.get('/mass/:mass', async (req, res) => {
     const result = await Landing.find({mass: req.params.mass}).select('name mass')
 

@@ -27,6 +27,12 @@ router.get('/all', async (req, res) => {
     res.send(result)
 })
 
+router.post('/all', async (req, res) => {
+    const landing = new Landing(req.body)
+    await landing.save()
+    res.send('Usuario guardado')
+})
+
 router.get('/mass/:mass', async (req, res) => {
     const result = await Landing.find({mass: req.params.mass}).select('name mass')
 

@@ -26,6 +26,15 @@ router.get('/neas', async (req, res) => {
     res.send(result)
 })
 
+router.post('/neas', async (req, res) => {
+    const nea = new Nea(req.body)
+    await nea.save()
+    res.send('Nuevo nea')
+})
+
+
+
+
 router.post('/create', async (req,res) => {
     const {error} = validate(req.body)
     if (error) return res.status(400).send(error.details[0].message)
